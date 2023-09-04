@@ -1,6 +1,10 @@
 package com.electric.infinity;
 
+import com.electric.infinity.Registry.Blocks.Blocks;
+import com.electric.infinity.Registry.CreativeTabs.CreativeTabs;
+import com.electric.infinity.Registry.Items.Items;
 import com.mojang.logging.LogUtils;
+import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
@@ -21,7 +25,13 @@ public class Infinity {
     private static final Logger LOGGER = LogUtils.getLogger();
 
     public Infinity() {
+
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+
+        CreativeTabs.register(modEventBus);
+
+        Items.register(modEventBus);
+        Blocks.register(modEventBus);
 
         modEventBus.addListener(this::commonSetup);
 
@@ -33,6 +43,10 @@ public class Infinity {
     }
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
 
+        if(event.getTabKey() == CreativeModeTabs.INGREDIENTS) {
+
+            //event.accept(Items.TEST_ITEM); used to add modded items into the vanilla Creative Tabs.
+        }
     }
     @SubscribeEvent
     public void onServerStarting(ServerStartingEvent event) {
